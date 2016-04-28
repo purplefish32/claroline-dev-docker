@@ -1,0 +1,11 @@
+services:
+  claroline-web:
+    build: .
+    ports:
+      - "88:80"
+    links:
+      - claroline-db
+  claroline-db:
+    image: mysql/mysql-server:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD=toor
