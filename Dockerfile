@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
   git \
   wget \
   curl \
+  unzip \
   xz-utils \
   mysql-client \
   #echo "ServerName localhost" >> /etc/apache2/apache2.conf \
@@ -94,4 +95,4 @@ RUN chmod +x /var/www/html/claroline/install.sh
 EXPOSE 80
 
 # By default, simply start apache.
-CMD /var/www/html/claroline/install.sh
+CMD /usr/sbin/apache2ctl -D FOREGROUND
