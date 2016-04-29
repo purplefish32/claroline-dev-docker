@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
   wget \
   curl \
   xz-utils \
+  mysql-client \
   #echo "ServerName localhost" >> /etc/apache2/apache2.conf \
     && cd /var/www/html \
     && wget "http://packages.claroline.net/releases/$CLAROLINE_VERSION/claroline-$CLAROLINE_VERSION-dev.tar.gz" \
@@ -77,14 +78,20 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
   && tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 \
   && rm "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt.asc SHASUMS256.txt
 
+#Claroline installation script
+COPY config/install.sh /var/www/html/claroline/install.sh
+RUN chmod +x /var/www/html/claroline/install.sh
+
+
+
 #Run composer
-RUN cd /var/www/html/claroline \
-    && composer sync-dev
+#RUN cd /var/www/html/claroline \
+#    && composer sync-dev
 
 #Create admin user
-RUN php app/console claroline:user:create -a John Doe admin admin jhon.doe@test.com
+#RUN php app/console claroline:user:create -a John Doe admin admin jhon.doe@test.com
 
 EXPOSE 80
 
 # By default, simply start apache.
-CMD /usr/sbin/apache2ctl -D FOREGROUND
+CMD /var/www/html/claroline/install.sh

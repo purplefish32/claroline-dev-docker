@@ -3,11 +3,11 @@ parameters:
 # database
 
     database_driver: pdo_mysql
-    database_host: mysql
+    database_host: claroline-db
     database_port: ~
     database_name: claroline
-    database_user: root
-    database_password: toor
+    database_user: claroline
+    database_password: claroline
 
     test_database_driver: '%database_driver%'
     test_database_host: '%database_host%'
