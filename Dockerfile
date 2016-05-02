@@ -7,12 +7,16 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ENV CLAROLINE_VERSION 6.0.3
 
+# Let www-data write
+RUN usermod -u 1000 www-data
+
 RUN apt-get update && apt-get install -y \
   vim \
   git \
   wget \
   curl \
   unzip \
+  zip \
   xz-utils \
   mysql-client \
   #echo "ServerName localhost" >> /etc/apache2/apache2.conf \
@@ -21,7 +25,8 @@ RUN apt-get update && apt-get install -y \
     && tar -xzf "claroline-$CLAROLINE_VERSION-dev.tar.gz" \
     && mv "claroline-$CLAROLINE_VERSION-dev" claroline \
     && cd claroline \
-    && chown -R www-data:www-data app/cache app/config app/logs app/sessions files web/uploads
+    && chown -R www-data:www-data app/cache app/config app/logs app/sessions files web/uploads \
+    && chmod -R 777 app/cache app/config app/logs app/sessions files web/uploads
 
 # Install PDO MySQL
 RUN docker-php-ext-install pdo pdo_mysql
@@ -35,6 +40,10 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get update && apt-get install -y \
         libicu-dev \
     && docker-php-ext-install -j$(nproc) intl
+
+# Install zip
+RUN apt-get update && apt-get install -y zlib1g-dev \
+    && docker-php-ext-install zip
 
 # Install gd
 RUN apt-get update && apt-get install -y \
@@ -82,8 +91,6 @@ RUN curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-
 #Claroline installation script
 COPY config/install.sh /var/www/html/claroline/install.sh
 RUN chmod +x /var/www/html/claroline/install.sh
-
-
 
 #Run composer
 #RUN cd /var/www/html/claroline \

@@ -11,8 +11,8 @@ services:
     claroline-db:
         image: mysql:5.7
         container_name: claroline-db
-        ports:
-            - "3306:3306"
+        volumes:
+          - "./config/my.cnf:/etc/mysql/my.cnf:ro"
         environment:
             MYSQL_ROOT_PASSWORD: claroline
             MYSQL_DATABASE: claroline

@@ -1,10 +1,6 @@
 #!/bin/bash
-echo "Starting Apache"
-/usr/sbin/apache2ctl -D FOREGROUND
-echo "Apache started"
 echo "Waiting for MySQL"
-until mysql --host=claroline-db --user=claroline --password=claroline &> /dev/null
-do
+until [ mysql --host=claroline-db --user=claroline --password=claroline &> /dev/null ]; do
   printf "."
   sleep 1
 done
