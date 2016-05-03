@@ -19,6 +19,8 @@ RUN apt-get update && apt-get install -y \
   zip \
   xz-utils \
   mysql-client \
+  xfonts-75dpi \
+  libav-tools \
   #echo "ServerName localhost" >> /etc/apache2/apache2.conf \
     && cd /var/www/html \
     && wget "http://packages.claroline.net/releases/$CLAROLINE_VERSION/claroline-$CLAROLINE_VERSION-dev.tar.gz" \
