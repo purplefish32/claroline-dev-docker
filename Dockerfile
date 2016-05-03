@@ -5,8 +5,6 @@ MAINTAINER Donovan Tengblad
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV CLAROLINE_VERSION 6.0.3
-
 # Let www-data write
 RUN usermod -u 1000 www-data
 
@@ -20,15 +18,7 @@ RUN apt-get update && apt-get install -y \
   xz-utils \
   mysql-client \
   xfonts-75dpi \
-  libav-tools \
-  #echo "ServerName localhost" >> /etc/apache2/apache2.conf \
-    && cd /var/www/html \
-    && wget "http://packages.claroline.net/releases/$CLAROLINE_VERSION/claroline-$CLAROLINE_VERSION-dev.tar.gz" \
-    && tar -xzf "claroline-$CLAROLINE_VERSION-dev.tar.gz" \
-    && mv "claroline-$CLAROLINE_VERSION-dev" claroline \
-    && cd claroline \
-    && chown -R www-data:www-data app/cache app/config app/logs app/sessions files web/uploads \
-    && chmod -R 777 app/cache app/config app/logs app/sessions files web/uploads
+  libav-tools
 
 # Install PDO MySQL
 RUN docker-php-ext-install pdo pdo_mysql
