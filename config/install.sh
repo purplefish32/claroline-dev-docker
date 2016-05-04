@@ -25,3 +25,5 @@ composer sync-dev
 echo "Creating default user"
 php app/console claroline:user:create -a John Doe admin admin jhon.doe@test.com
 echo "Done"
+npm run webpack
+npm run watch
