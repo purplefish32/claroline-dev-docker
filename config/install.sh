@@ -28,6 +28,8 @@ echo "Creating admin user"
 php app/console claroline:user:create -a Jhon Doe admin pass admin@test.com
 echo "Setting permissions"
 chmod -R 777 /var/www/html/claroline/app/cache /var/www/html/claroline/app/logs /var/www/html/claroline/app/config /var/www/html/claroline/app/sessions /var/www/html/claroline/files /var/www/html/claroline/web/uploads
+echo "Warming cache"
+php /var/www/html/claroline/app/console cache:warmup --env=prodphp /var/www/html/claroline/app/console cache:warmup --env=prod
 echo "Done"
 
 bash
