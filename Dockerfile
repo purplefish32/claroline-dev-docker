@@ -46,8 +46,8 @@ RUN npm cache clean -f \
 COPY config/install.sh /usr/bin/install.sh
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-RUN rm /var/www/index.html
-COPY config/index.html /var/www/index.html
+RUN rm /var/www/html/index.html
+COPY config/index.html /var/www/html/index.html
 
 RUN echo 'Include /etc/phpmyadmin/apache.conf' >> /etc/apache2/apache2.conf
 RUN chmod +x /usr/bin/install.sh
