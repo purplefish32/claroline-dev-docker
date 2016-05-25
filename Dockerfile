@@ -5,8 +5,13 @@ MAINTAINER Donovan Tengblad
 # Install packages
 ENV DEBIAN_FRONTEND noninteractive
 
-# Let www-data write
-#RUN usermod -u 1000 www-data
+RUN echo "mysql-server-5.6 mysql-server/root_password password root" | debconf-set-selections
+RUN echo "mysql-server-5.6 mysql-server/root_password_again password root" | debconf-set-selections
+RUN echo "phpmyadmin phpmyadmin/dbconfig-install boolean true" | debconf-set-selections
+RUN echo "phpmyadmin phpmyadmin/app-password-confirm password root" | debconf-set-selections
+RUN echo "phpmyadmin phpmyadmin/mysql/admin-pass password root" | debconf-set-selections
+RUN echo "phpmyadmin phpmyadmin/mysql/app-pass password root" | debconf-set-selections
+RUN echo "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2" | debconf-set-selections
 
 RUN apt-get update && apt-get install -y \
   supervisor \
@@ -28,7 +33,11 @@ RUN apt-get update && apt-get install -y \
   php-xml \
   php-mcrypt \
   php-mysql \
-  npm
+  npm \
+  phpmyadmin \
+  apache2-utils \
+  php-mbstring \
+  php-gettext
 
 RUN npm cache clean -f \
   && npm install -g n \
@@ -37,6 +46,10 @@ RUN npm cache clean -f \
 COPY config/install.sh /usr/bin/install.sh
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+RUN rm /var/www/index.html
+COPY config/index.html /var/www/index.html
+
+RUN echo 'Include /etc/phpmyadmin/apache.conf' >> /etc/apache2/apache2.conf
 RUN chmod +x /usr/bin/install.sh
 
 CMD ["/usr/bin/install.sh"]
