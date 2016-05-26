@@ -3,7 +3,6 @@ supervisord -c /etc/supervisor/conf.d/supervisord.conf > /dev/null 2>&1 &
 
 phpenmod mcrypt
 phpenmod mbstring
-systemctl restart apache2
 
 echo "Waiting for MySQL"
 service mysql start
@@ -31,11 +30,13 @@ mv composer.phar /usr/local/bin/composer
 echo "Installing Claroline Connect"
 composer fast-install
 echo "Creating admin user"
-php app/console claroline:user:create -a Jhon Doe admin pass admin@test.com
+php app/console claroline:user:create -a John Doe admin pass admin@test.com
 echo "Setting permissions"
 chmod -R 777 /var/www/html/claroline/app/cache /var/www/html/claroline/app/logs /var/www/html/claroline/app/config /var/www/html/claroline/app/sessions /var/www/html/claroline/files /var/www/html/claroline/web/uploads
 #echo "Warming cache"
 #php /var/www/html/claroline/app/console cache:warmup --env=prodphp /var/www/html/claroline/app/console cache:warmup --env=prod
+a2ensite claroline.conf
+service apache2 restart
 echo "Done"
 
 bash

@@ -45,6 +45,9 @@ RUN npm cache clean -f \
 
 COPY config/install.sh /usr/bin/install.sh
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY config/claroline.conf /etc/apache2/sites-available/
+COPY config/cc/index.html /var/www/html/claroline/
+RUN a2enmod rewrite
 
 RUN rm /var/www/html/index.html
 COPY config/index.html /var/www/html/index.html
