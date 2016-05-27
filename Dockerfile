@@ -33,6 +33,8 @@ RUN apt-get update && apt-get install -y \
   php-xml \
   php-mcrypt \
   php-mysql \
+  php-curl \
+  php-intl \
   npm \
   phpmyadmin \
   apache2-utils \
