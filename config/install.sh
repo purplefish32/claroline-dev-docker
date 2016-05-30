@@ -11,7 +11,7 @@ until [ mysql ]; do
   sleep 1
 done
 echo -e "\nMySQL ready"
-
+mysql --user=root --password=root -v -e "set global sql_mode=''"
 echo "Downloading Claroline Connect"
 mkdir -p /var/www/html/claroline
 cd /var/www/html/claroline
@@ -23,7 +23,6 @@ echo "Setting up parameters.yml"
 sed -i "s/database_password: ~/database_password: root/g" /var/www/html/claroline/app/config/parameters.yml
 echo "Installing composer"
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-php -r "if (hash_file('SHA384', 'composer-setup.php') === '92102166af5abdb03f49ce52a40591073a7b859a86e8ff13338cf7db58a19f7844fbc0bb79b2773bf30791e935dbd938') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 php composer-setup.php
 php -r "unlink('composer-setup.php');"
 mv composer.phar /usr/local/bin/composer
