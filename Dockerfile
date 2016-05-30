@@ -49,6 +49,7 @@ COPY config/install.sh /usr/bin/install.sh
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY config/claroline.conf /etc/apache2/sites-available/
 COPY config/cc/index.html /var/www/html/claroline/
+COPY config/cc/app_dev.php /tmp
 RUN a2enmod rewrite
 
 RUN rm /var/www/html/index.html
