@@ -45,6 +45,8 @@ RUN npm cache clean -f \
   && npm install -g n \
   && n latest
 
+RUN npm install frontail -g
+
 COPY config/install.sh /usr/bin/install.sh
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY config/claroline.conf /etc/apache2/sites-available/
