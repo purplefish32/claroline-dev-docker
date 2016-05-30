@@ -38,6 +38,10 @@ rm /var/www/html/claroline/web/app_dev.php
 mv /tmp/app_dev.php /var/www/html/claroline/web
 a2ensite claroline.conf
 service apache2 restart
+
+frontail /var/www/html/claroline/app/logs/dev.log -d -t dark -p 9001
+frontail /var/www/html/claroline/app/logs/prod.log -d -t dark -p 9002
+
 echo "Done"
 
 bash
