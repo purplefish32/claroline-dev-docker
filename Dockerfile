@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install -y \
   libav-tools \
   php \
   libapache2-mod-php \
+  libav-tools \
   php-xml \
   php-mcrypt \
   php-mysql \
