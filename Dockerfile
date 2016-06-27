@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
   mysql-client \
   mysql-server \
   xfonts-75dpi \
-  libav-tools \
+  ffmpeg \
   php \
   libapache2-mod-php \
   libav-tools \
