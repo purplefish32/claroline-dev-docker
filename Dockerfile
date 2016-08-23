@@ -54,9 +54,17 @@ COPY config/claroline.conf /etc/apache2/sites-available/
 COPY config/cc/index.html /var/www/html/claroline/
 COPY config/cc/app_dev.php /tmp
 RUN a2enmod rewrite
+RUN sed -i '/upload_max_filesize/s/= *2M/=150M/' /etc/php/7.0/apache2/php.ini
+RUN sed -i '/max_execution_time/s/= *30/=180/' /etc/php/7.0/apache2/php.ini
 
 RUN rm /var/www/html/index.html
 COPY config/index.html /var/www/html/index.html
+
+RUN mkdir -p /var/www/html/phpinfo
+RUN cd /var/www/html/phpinfo
+RUN touch /var/www/html/phpinfo/index.php
+RUN echo '<?php phpinfo(); ?>' >> /var/www/html/phpinfo/index.php
+COPY config/phpinfo.conf /etc/apache2/sites-available/
 
 RUN echo 'Include /etc/phpmyadmin/apache.conf' >> /etc/apache2/apache2.conf
 RUN chmod +x /usr/bin/install.sh
